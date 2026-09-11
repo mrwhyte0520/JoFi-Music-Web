@@ -1,7 +1,7 @@
 name = "jofi-music"
 
 [phases.setup]
-nixPkgs = ["python312", "nodejs_22"]
+nixPkgs = ["python312", "python312Packages.pip", "nodejs_22"]
 
 [phases.install]
 cmds = [
