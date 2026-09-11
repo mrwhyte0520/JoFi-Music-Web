@@ -151,6 +151,34 @@ export function PlayerProvider({ children }) {
     } catch { /* silencioso */ }
   }, [state.favs])
 
+  /* ---------- botón "atrás" del sistema (Android) ---------- */
+  /* Sin esto, el overlay del reproductor/letras no cuenta como una
+     "pantalla" para el navegador: el botón atrás sale de la app entera
+     y corta la música. Empujamos una entrada de historial al abrir cada
+     overlay y la consumimos al cerrar (por botón o por atrás real),
+     para que atrás solo cierre el overlay en vez de salir de la app. */
+  useEffect(() => {
+    if (state.screen === 'player') window.history.pushState({ jofiOverlay: 'player' }, '')
+  }, [state.screen === 'player'])
+
+  useEffect(() => {
+    if (state.lyrics) window.history.pushState({ jofiOverlay: 'lyrics' }, '')
+  }, [!!state.lyrics])
+
+  useEffect(() => {
+    const onPopState = () => {
+      if (stateRef.current.lyrics) {
+        dispatch({ type: 'LYRICS', p: false })
+        return
+      }
+      if (stateRef.current.screen === 'player') {
+        dispatch({ type: 'SCREEN', s: 'list' })
+      }
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
+
   const showDialog = useCallback((title, message, actions = [{ label: 'Cerrar' }], opts = {}) => {
     setDialog({ title, message, actions, ...opts })
   }, [])
@@ -674,7 +702,10 @@ export function PlayerProvider({ children }) {
     }
   }, [applyLyrics, currentSong])
 
-  const closeLyrics = useCallback(() => dispatch({ type: 'LYRICS', p: false }), [])
+  const closeLyrics = useCallback(() => {
+    if (stateRef.current.lyrics) window.history.back()
+    else dispatch({ type: 'LYRICS', p: false })
+  }, [])
 
   /* si las letras están abiertas siguiendo la canción actual y ésta cambia, seguirlas */
   useEffect(() => {
@@ -740,7 +771,10 @@ export function PlayerProvider({ children }) {
       playSongs,
       openLyrics,
       closeLyrics,
-      back: () => dispatch({ type: 'SCREEN', s: 'list' }),
+      back: () => {
+        if (stateRef.current.screen === 'player') window.history.back()
+        else dispatch({ type: 'SCREEN', s: 'list' })
+      },
       openPlayer: () => dispatch({ type: 'SCREEN', s: 'player' }),
       setTab: (t) => dispatch({ type: 'TAB', t }),
       setCc: (c) => dispatch({ type: 'CC', c }),
