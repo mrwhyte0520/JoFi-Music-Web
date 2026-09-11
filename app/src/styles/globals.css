@@ -615,7 +615,7 @@ button { font-family: inherit; }
 }
 
 .np-bottom {
-  display: flex; justify-content: space-between; align-items: flex-end;
+  display: flex; justify-content: flex-end; align-items: flex-end;
   margin-top: auto;
 }
 .np-bottomchips { display: flex; gap: 8px; }

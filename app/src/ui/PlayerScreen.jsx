@@ -3,7 +3,7 @@ import { usePlayer } from '../state/PlayerContext'
 import { artworkFallback, formatDuration, thumbFor } from '../lib/format'
 import useDominantColor from '../hooks/useDominantColor'
 import {
-  IconChevronDown, IconDevice, IconDots, IconHeart, IconHeartFill,
+  IconChevronDown, IconDots, IconHeart, IconHeartFill,
   IconMusic, IconNext, IconPause, IconPlay, IconPrev, IconQueue, IconRepeat,
   IconShare, IconShuffle
 } from './icons'
@@ -188,9 +188,6 @@ export default function PlayerScreen() {
         </div>
 
         <div className="np-bottom">
-          <button className="np-bbn" onClick={() => actions.toast('Este teléfono')} aria-label="Dispositivo">
-            <IconDevice width={22} height={22} />
-          </button>
           <div className="np-bottomchips">
             <button className="np-bbn" onClick={showQueue} aria-label="Ver cola" title="Cola">
               <IconQueue width={22} height={22} />
