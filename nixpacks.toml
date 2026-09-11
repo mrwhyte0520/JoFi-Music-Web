@@ -1,14 +1,15 @@
 name = "jofi-music"
 
 [phases.setup]
-nixPkgs = ["python312", "python312Packages.pip", "nodejs_22"]
+nixPkgs = ["python312", "nodejs_22"]
 
 [phases.install]
 cmds = [
-  "python -m pip install --upgrade pip",
-  "python -m pip install -r requirements.txt",
+  "python -m venv /opt/venv",
+  "/opt/venv/bin/pip install --upgrade pip",
+  "/opt/venv/bin/pip install -r requirements.txt",
   "cd app && npm install && npm run build"
 ]
 
 [start]
-cmd = "python server.py"
+cmd = "/opt/venv/bin/python server.py"
