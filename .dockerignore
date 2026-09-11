@@ -1,0 +1,11 @@
+node_modules
+app/node_modules
+app/dist
+__pycache__
+*.pyc
+*.db
+*.db-shm
+*.db-wal
+logs
+*.log
+.git
