@@ -1,0 +1,26 @@
+{
+  "name": "jofi-vite-real",
+  "private": true,
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "build": "node build-app.mjs",
+    "start": "node server.js"
+  },
+  "overrides": {
+    "rollup": "npm:@rollup/wasm-node@4.63.2",
+    "esbuild": "0.28.2"
+  },
+  "dependencies": {
+    "undici": "^6.21.1",
+    "youtubei.js": "^12.1.1",
+    "@distube/ytdl-core": "^4.15.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "vite": "^5.4.11",
+    "vite-plugin-pwa": "^0.20.5"
+  }
+}
